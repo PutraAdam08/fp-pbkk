@@ -9,7 +9,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func DB() *gorm.DB {
+func connectDB() *gorm.DB {
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
