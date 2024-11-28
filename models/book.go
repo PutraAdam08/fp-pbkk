@@ -28,3 +28,13 @@ func BookFind(id uint64) *Book {
 	DB.Where("id = ?", id).First(&book)
 	return &book
 }
+
+func BookAdd(title string) {
+	book := Book{Title: title}
+	DB.Create(&book)
+}
+
+func BookEdit(id uint, title string) {
+	var book Book
+	DB.Model(&book).Where("id = ?", id).Updates(Book{Title: title})
+}
