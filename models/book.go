@@ -11,9 +11,11 @@ import (
 
 type Book struct {
 	gorm.Model
-	ID    uint
-	Title string
-	Units []Unit `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	ID          uint
+	Title       string
+	PublishYear string
+	ISBN        string
+	Units       []Unit `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 }
 
 func BooksAll(ctx *gin.Context) *[]Book {
@@ -29,12 +31,14 @@ func BookFind(id uint64) *Book {
 	return &book
 }
 
-func BookAdd(title string) {
+func BookCreate(title string) *Book {
 	book := Book{Title: title}
 	DB.Create(&book)
+	return &book
 }
 
-func BookEdit(id uint, title string) {
+func BookUpdate(id uint64, title string) *Book {
 	var book Book
 	DB.Model(&book).Where("id = ?", id).Updates(Book{Title: title})
+	return &book
 }
