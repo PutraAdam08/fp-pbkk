@@ -11,7 +11,9 @@ import (
 )
 
 type formData struct {
-	Title string `form:"title"`
+	Title       string `form:"title"`
+	PublishYear string `form:"publishYear"`
+	ISBN        string `form:"isbn"`
 }
 
 func BookIndex(c *gin.Context) {
@@ -48,7 +50,7 @@ func BookAdd(c *gin.Context) {
 	var data formData
 	c.Bind(&data)
 
-	book := models.BookCreate(data.Title)
+	book := models.BookCreate(data.Title, data.PublishYear, data.ISBN)
 	if book == nil || book.ID == 0 {
 		c.Render(http.StatusBadRequest, render.Data{})
 		return

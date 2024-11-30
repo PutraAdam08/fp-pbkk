@@ -31,8 +31,8 @@ func BookFind(id uint64) *Book {
 	return &book
 }
 
-func BookCreate(title string) *Book {
-	book := Book{Title: title}
+func BookCreate(title string, publishYear string, ISBN string) *Book {
+	book := Book{Title: title, PublishYear: publishYear, ISBN: ISBN}
 	DB.Create(&book)
 	return &book
 }
