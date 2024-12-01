@@ -11,7 +11,7 @@ import (
 
 type Book struct {
 	gorm.Model
-	ID          uint
+	ID          uint64
 	Title       string
 	PublishYear string
 	ISBN        string
@@ -37,8 +37,13 @@ func BookCreate(title string, publishYear string, ISBN string) *Book {
 	return &book
 }
 
-func BookUpdate(id uint64, title string) *Book {
+func BookUpdate(id uint64, title string, publishYear string, ISBN string) *Book {
 	var book Book
-	DB.Model(&book).Where("id = ?", id).Updates(Book{Title: title})
+	DB.Model(&book).Where("id = ?", id).Updates(Book{Title: title, PublishYear: publishYear, ISBN: ISBN})
 	return &book
+}
+
+func BookDelete(id uint64) *gorm.DB {
+	result := DB.Unscoped().Delete(&id)
+	return result
 }

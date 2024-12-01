@@ -28,6 +28,16 @@ func UserCreate(email string, password string) *User {
 	return &user
 }
 
+func AdminCreate(email string, password string) *User {
+	hashed, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		return nil
+	}
+
+	user := User{Email: email, Password: string(hashed), IsAdmin: true}
+	return &user
+}
+
 func UserMatchPassword(email string, password string) *User {
 	var user User
 	DB.Where("email = ?").First(&user)

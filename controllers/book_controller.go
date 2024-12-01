@@ -68,7 +68,7 @@ func BookEdit(c *gin.Context) {
 	if err != nil {
 		fmt.Printf("Error: %v", err)
 	}
-	book := models.BookUpdate(id, data.Title)
+	book := models.BookUpdate(id, data.Title, data.PublishYear, data.ISBN)
 	if book == nil || book.ID == 0 {
 		c.Render(http.StatusBadRequest, render.Data{})
 		return
@@ -76,4 +76,18 @@ func BookEdit(c *gin.Context) {
 
 	c.Redirect(http.StatusFound, "/books")
 
+}
+
+func BookRemove(c *gin.Context) {
+	idStr := c.Param("id")
+	id, err := strconv.ParseUint(idStr, 10, 64)
+	if err != nil {
+		fmt.Printf("Error: %v", err)
+	}
+	res := models.BookDelete(id)
+	if res != nil {
+		c.Render(http.StatusBadRequest, render.Data{})
+		return
+	}
+	c.Redirect(http.StatusFound, "/books")
 }
