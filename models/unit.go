@@ -10,6 +10,7 @@ type Unit struct {
 	Code     string
 	Borrowed bool
 	BookID   uint64
+	Borrow   []*Borrow `gorm:"many2many:user_languages;"`
 }
 
 func UnitCreate(code string) *Unit {
