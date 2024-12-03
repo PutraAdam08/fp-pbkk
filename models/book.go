@@ -16,6 +16,8 @@ type Book struct {
 	PublishYear string
 	ISBN        string
 	Units       []Unit `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	CategoryID  uint64
+	Category    Category
 }
 
 func BooksAll(ctx *gin.Context) *[]Book {
