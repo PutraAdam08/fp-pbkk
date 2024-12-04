@@ -23,7 +23,7 @@ func CategoryShow(c *gin.Context) {
 	category := models.CategoryFind(id)
 	c.HTML(
 		http.StatusOK,
-		"categorys/show.tpl",
+		"category/show.tpl",
 		gin.H{
 			"category": category,
 		},
@@ -40,7 +40,7 @@ func CategoryAdd(c *gin.Context) {
 		return
 	}
 
-	c.Redirect(http.StatusFound, "/categorys")
+	c.Redirect(http.StatusFound, "/books")
 
 }
 

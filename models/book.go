@@ -15,14 +15,21 @@ type Book struct {
 	Title       string
 	PublishYear string
 	ISBN        string
+	Category    string
 	Units       []Unit `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-	CategoryID  uint64
-	Category    Category
 }
 
 func BooksAll(ctx *gin.Context) *[]Book {
 	var books []Book
 	DB.Where("deleted_at is NULL").Scopes(p.Paginate(ctx)).Order("updated_at desc").Find(&books)
+	fmt.Println(books)
+	return &books
+}
+
+func BooksCategoryFilter(ctx *gin.Context, find string) *[]Book {
+	var books []Book
+	category := "%" + find + "%"
+	DB.Where("deleted_at is NULL AND category LIKE ?", category).Scopes(p.Paginate(ctx)).Order("updated_at desc").Find(&books)
 	fmt.Println(books)
 	return &books
 }
