@@ -16,6 +16,14 @@ type formData struct {
 	ISBN        string `form:"isbn"`
 }
 
+func MainPage(c *gin.Context) {
+	c.HTML(
+		http.StatusOK,
+		"books/main.tpl",
+		gin.H{},
+	)
+}
+
 func BookIndex(c *gin.Context) {
 	books := models.BooksAll(c)
 	//categories := models.CategoriesAll(c)

@@ -46,6 +46,7 @@ func main() {
 		r.GET("books/:id", controllers.BookShow)
 	/**/
 
+	r.GET("/", controllers.MainPage)
 	r.GET("/signup", controllers.SignupPage)
 	r.GET("/login",
 		controllers.LoginPage)
