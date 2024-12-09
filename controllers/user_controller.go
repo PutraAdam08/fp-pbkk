@@ -44,7 +44,7 @@ func SignUp(c *gin.Context) {
 	session := sessions.Default(c)
 	session.Set("userID", user.ID)
 	session.Save()
-	//c.Redirect(http.StatusFound, "/blogs")
+	c.Redirect(http.StatusFound, "/books")
 }
 
 func Login(c *gin.Context) {
@@ -64,7 +64,7 @@ func Login(c *gin.Context) {
 	if user.IsAdmin {
 		c.Redirect(http.StatusFound, "/admin")
 	} else {
-		c.Redirect(http.StatusFound, "/blogs")
+		c.Redirect(http.StatusFound, "/books")
 	}
 }
 
