@@ -17,6 +17,7 @@ func main() {
 	m.DBMigrate()
 	m.DBSeed()
 
+	r.GET("/", controllers.MainPage)
 	r.GET("/books", controllers.BookIndex)
 	r.GET("/books/:id", controllers.BookShow)
 
