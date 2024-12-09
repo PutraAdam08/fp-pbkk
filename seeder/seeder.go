@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/joho/godotenv"
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -19,6 +20,13 @@ type Book struct {
 	ISBN        string
 	Units       []Unit `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 	Category    string
+}
+
+type User struct {
+	gorm.Model
+	Email    string `gorm:"size:64,index"`
+	Password string `gorm:"size:255"`
+	IsAdmin  bool
 }
 
 type Category struct {
@@ -66,7 +74,7 @@ func main() {
 	}
 
 	// AutoMigrate the schema
-	db.AutoMigrate(&Book{}, &Unit{}, &Borrow{})
+	db.AutoMigrate(&Book{}, &Unit{}, &Borrow{}, &User{})
 
 	// Create some categories
 	categories := []Category{
@@ -77,6 +85,13 @@ func main() {
 		{Name: "Biography"},
 	}
 	db.Create(&categories)
+	pw := "12345678"
+	p, err := bcrypt.GenerateFromPassword([]byte(pw), bcrypt.DefaultCost)
+	users := []User{
+		{Email: "admin1@gmail.com", Password: string(p), IsAdmin: true},
+		{Email: "user1@gmail.com", Password: string(p), IsAdmin: false},
+	}
+	db.Create(&users)
 
 	// Prepare a slice of books for bulk creation
 	books := make([]Book, 0, 25)

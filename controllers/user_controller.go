@@ -14,9 +14,22 @@ type userData struct {
 	Password string `form:"password"`
 }
 
+func DashboardPage(c *gin.Context) {
+	session := sessions.Default(c)
+	sessionID := session.Get("userID")
+	// Check if the user exists
+	userId := sessionID.(uint)
+	user := models.UserFromId(userId)
+	c.HTML(http.StatusOK,
+		"admin/dashboard.tpl",
+		gin.H{
+			"user": user,
+		})
+}
+
 func SignupPage(c *gin.Context) {
 	c.HTML(http.StatusOK,
-		"auth/signup.tpl",
+		"auth/register.tpl",
 		gin.H{})
 }
 

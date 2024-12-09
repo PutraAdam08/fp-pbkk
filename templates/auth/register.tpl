@@ -1,3 +1,4 @@
+{{ define "auth/register.tpl"}}
 <!DOCTYPE html>
     <html lang="en">
         <head>
@@ -41,7 +42,7 @@
             {{ end }}
         </div>
         <h2>Signup</h2>
-        <form action="/users/signup" method="POST">
+        <form action="/signup" method="POST">
             <label for="email">Email:</label><br>
             <input type="email" id="email" name="email" required><br>
             <label for="password">Password:</label><br>
@@ -49,3 +50,5 @@
             <input type="submit" value="Signup">
         </form>
     </body>
+</html>
+{{end}}
