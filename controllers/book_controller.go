@@ -26,6 +26,7 @@ func MainPage(c *gin.Context) {
 
 func BookIndex(c *gin.Context) {
 	books := models.BooksAll(c)
+	//categories := models.CategoriesAll(c)
 	c.HTML(
 		http.StatusOK,
 		"books/index.tpl",

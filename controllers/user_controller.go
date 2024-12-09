@@ -14,7 +14,32 @@ type userData struct {
 	Password string `form:"password"`
 }
 
-func signUp(c *gin.Context) {
+func DashboardPage(c *gin.Context) {
+	session := sessions.Default(c)
+	sessionID := session.Get("userID")
+	// Check if the user exists
+	userId := sessionID.(uint)
+	user := models.UserFromId(userId)
+	c.HTML(http.StatusOK,
+		"admin/dashboard.tpl",
+		gin.H{
+			"user": user,
+		})
+}
+
+func SignupPage(c *gin.Context) {
+	c.HTML(http.StatusOK,
+		"auth/register.tpl",
+		gin.H{})
+}
+
+func LoginPage(c *gin.Context) {
+	c.HTML(http.StatusOK,
+		"auth/login.tpl",
+		gin.H{})
+}
+
+func SignUp(c *gin.Context) {
 	var data userData
 	c.Bind(&data)
 
@@ -32,7 +57,7 @@ func signUp(c *gin.Context) {
 	session := sessions.Default(c)
 	session.Set("userID", user.ID)
 	session.Save()
-	//c.Redirect(http.StatusFound, "/blogs")
+	c.Redirect(http.StatusFound, "/books")
 }
 
 func Login(c *gin.Context) {
@@ -49,7 +74,11 @@ func Login(c *gin.Context) {
 	session.Set("userID", user.ID)
 	session.Save()
 
-	c.Redirect(http.StatusFound, "/blogs")
+	if user.IsAdmin {
+		c.Redirect(http.StatusFound, "/admin")
+	} else {
+		c.Redirect(http.StatusFound, "/books")
+	}
 }
 
 func Logout(c *gin.Context) {
