@@ -18,13 +18,12 @@ type formData struct {
 
 func BookIndex(c *gin.Context) {
 	books := models.BooksAll(c)
-	categories := models.CategoriesAll(c)
+	//categories := models.CategoriesAll(c)
 	c.HTML(
 		http.StatusOK,
 		"books/index.tpl",
 		gin.H{
 			"books":      books,
-			"categories": categories,
 			"page":       c.GetInt("page"),
 			"pageSize":   c.GetInt("pageSize"),
 			"totalPages": c.GetInt("totalPages"),

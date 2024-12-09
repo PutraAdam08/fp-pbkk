@@ -1,3 +1,4 @@
+{{ define "auth/login.tpl"}}
 <!DOCTYPE html>
     <html lang="en">
         <head>
@@ -49,3 +50,5 @@
             <input type="submit" value="Login">
         </form>
     </body>
+</html>
+{{end}}
