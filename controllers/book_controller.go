@@ -14,6 +14,7 @@ type formData struct {
 	Title       string `form:"title"`
 	PublishYear string `form:"publishYear"`
 	ISBN        string `form:"isbn"`
+	Category    string `form:"category"`
 }
 
 func MainPage(c *gin.Context) {
@@ -59,13 +60,13 @@ func BookAdd(c *gin.Context) {
 	var data formData
 	c.Bind(&data)
 
-	book := models.BookCreate(data.Title, data.PublishYear, data.ISBN)
+	book := models.BookCreate(data.Title, data.PublishYear, data.ISBN, data.Category)
 	if book == nil || book.ID == 0 {
 		c.Render(http.StatusBadRequest, render.Data{})
 		return
 	}
 
-	c.Redirect(http.StatusFound, "/books")
+	c.Redirect(http.StatusFound, "/admin/dashboard")
 
 }
 
@@ -83,7 +84,7 @@ func BookEdit(c *gin.Context) {
 		return
 	}
 
-	c.Redirect(http.StatusFound, "/books")
+	c.Redirect(http.StatusFound, "/admin/dashboard")
 
 }
 
@@ -93,10 +94,11 @@ func BookRemove(c *gin.Context) {
 	if err != nil {
 		fmt.Printf("Error: %v", err)
 	}
-	res := models.BookDelete(id)
-	if res != nil {
-		c.Render(http.StatusBadRequest, render.Data{})
-		return
-	}
-	c.Redirect(http.StatusFound, "/books")
+	models.BookDelete(id)
+	// res := models.BookDelete(id)
+	// if res != nil {
+	// 	c.Render(http.StatusBadRequest, render.Data{})
+	// 	return
+	// }
+	c.Redirect(http.StatusFound, "/admin/dashboard")
 }

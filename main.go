@@ -31,12 +31,13 @@ func main() {
 
 	} /**/
 
-	admins := r.Group("/dashboard/", middlewares.AdminAuthMiddleware())
+	admins := r.Group("/admin/", middlewares.AdminAuthMiddleware())
 	{
 		admins.GET("dashboard/", controllers.DashboardPage)
 		admins.GET("books/", controllers.BookIndex)
 		admins.GET("books/:id", controllers.BookShow)
 		admins.POST("books/add", controllers.BookAdd)
+		admins.GET("remove/:id", controllers.BookRemove)
 
 	} /**/
 

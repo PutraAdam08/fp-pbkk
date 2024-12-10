@@ -40,8 +40,8 @@ func BookFind(id uint64) *Book {
 	return &book
 }
 
-func BookCreate(title string, publishYear string, ISBN string) *Book {
-	book := Book{Title: title, PublishYear: publishYear, ISBN: ISBN}
+func BookCreate(title string, publishYear string, ISBN string, cat string) *Book {
+	book := Book{Title: title, PublishYear: publishYear, ISBN: ISBN, Category: cat}
 	DB.Create(&book)
 	return &book
 }
@@ -53,6 +53,7 @@ func BookUpdate(id uint64, title string, publishYear string, ISBN string) *Book 
 }
 
 func BookDelete(id uint64) *gorm.DB {
-	result := DB.Unscoped().Delete(&id)
+	var book Book
+	result := DB.Where("id = ?", id).Delete(&book)
 	return result
 }
