@@ -37,6 +37,7 @@ func main() {
 		admins.GET("books/", controllers.BookIndex)
 		admins.GET("books/:id", controllers.BookShow)
 		admins.POST("books/add", controllers.BookAdd)
+		admins.POST("books/edit", controllers.BookEdit)
 		admins.GET("remove/:id", controllers.BookRemove)
 
 	} /**/

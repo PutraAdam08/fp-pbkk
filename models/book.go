@@ -46,9 +46,9 @@ func BookCreate(title string, publishYear string, ISBN string, cat string) *Book
 	return &book
 }
 
-func BookUpdate(id uint64, title string, publishYear string, ISBN string) *Book {
+func BookUpdate(id uint64, title string, publishYear string, ISBN string, cat string) *Book {
 	var book Book
-	DB.Model(&book).Where("id = ?", id).Updates(Book{Title: title, PublishYear: publishYear, ISBN: ISBN})
+	DB.Model(&book).Where("id = ?", id).Updates(Book{Title: title, PublishYear: publishYear, ISBN: ISBN, Category: cat})
 	return &book
 }
 
