@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/render"
 )
@@ -19,11 +20,29 @@ type formData struct {
 }
 
 func MainPage(c *gin.Context) {
-	c.HTML(
-		http.StatusOK,
-		"books/main.tpl",
-		gin.H{},
-	)
+	session := sessions.Default(c)
+
+	// Retrieve user ID from session
+	sessionID := session.Get("user_id")
+
+	userId := sessionID.(uint)
+	user := models.UserFromId(userId)
+	if user == nil {
+		// User is not in session
+		c.HTML(
+			http.StatusOK,
+			"books/main.tpl",
+			gin.H{},
+		)
+		return
+	} else {
+		if user.IsAdmin {
+			c.Redirect(http.StatusFound, "/admin/dashboard")
+		} else {
+			c.Redirect(http.StatusFound, "/books")
+		}
+
+	}
 }
 
 func BookIndex(c *gin.Context) {

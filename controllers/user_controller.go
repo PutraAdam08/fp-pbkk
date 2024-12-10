@@ -45,16 +45,16 @@ func SignUp(c *gin.Context) {
 	var data userData
 	c.Bind(&data)
 
-	if !models.CheckUserAvailability(data.Email) {
+	/*if !models.CheckUserAvailability(data.Email) {
 		c.Render(http.StatusBadRequest, render.Data{})
 		return
-	}
+	}/**/
 
 	user := models.UserCreate(data.Email, data.Password)
-	if user == nil || user.ID == 0 {
+	/*if user == nil || user.ID == 0 {
 		c.Render(http.StatusBadRequest, render.Data{})
 		return
-	}
+	}*/
 
 	session := sessions.Default(c)
 	session.Set("userID", user.ID)

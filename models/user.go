@@ -14,9 +14,8 @@ type User struct {
 
 func CheckUserAvailability(email string) bool {
 	var user User
-	user.ID = 0
-	err := DB.Where("email = ?", email).First(&user)
-	return err != nil
+	result := DB.Where("email = ?", email).First(&user)
+	return result.Error != nil
 }
 
 func UserCreate(email string, password string) *User {
@@ -26,6 +25,7 @@ func UserCreate(email string, password string) *User {
 	}
 
 	user := User{Email: email, Password: string(hashed), IsAdmin: false}
+	DB.Create(&user)
 	return &user
 }
 
