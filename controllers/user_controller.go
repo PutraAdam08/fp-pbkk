@@ -24,8 +24,11 @@ func DashboardPage(c *gin.Context) {
 	c.HTML(http.StatusOK,
 		"admin/dashboard.tpl",
 		gin.H{
-			"user":  user,
-			"books": books,
+			"user":       user,
+			"books":      books,
+			"page":       c.GetInt("page"),
+			"pageSize":   c.GetInt("pageSize"),
+			"totalPages": c.GetInt("totalPages"),
 		})
 }
 
