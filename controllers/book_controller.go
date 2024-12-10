@@ -11,6 +11,7 @@ import (
 )
 
 type formData struct {
+	ID          uint64 `form:"id"`
 	Title       string `form:"title"`
 	PublishYear string `form:"publishYear"`
 	ISBN        string `form:"isbn"`
@@ -73,16 +74,17 @@ func BookAdd(c *gin.Context) {
 func BookEdit(c *gin.Context) {
 	var data formData
 	c.Bind(&data)
-	idStr := c.Param("id")
-	id, err := strconv.ParseUint(idStr, 10, 64)
-	if err != nil {
-		fmt.Printf("Error: %v", err)
-	}
-	book := models.BookUpdate(id, data.Title, data.PublishYear, data.ISBN)
-	if book == nil || book.ID == 0 {
-		c.Render(http.StatusBadRequest, render.Data{})
-		return
-	}
+	// idStr := c.Param("id")
+	// id, err := strconv.ParseUint(idStr, 10, 64)
+	// if err != nil {
+	// 	fmt.Printf("Error: %v", err)
+	// }
+	models.BookUpdate(data.ID, data.Title, data.PublishYear, data.ISBN, data.Category)
+	// book := models.BookUpdate(data.ID, data.Title, data.PublishYear, data.ISBN, data.Category)
+	// if book == nil || book.ID == 0 {
+	// 	c.Render(http.StatusBadRequest, render.Data{})
+	// 	return
+	// }
 
 	c.Redirect(http.StatusFound, "/admin/dashboard")
 
