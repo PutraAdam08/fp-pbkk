@@ -14,7 +14,7 @@
             <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"  rel="stylesheet" />
             <script src="https://cdn.tailwindcss.com"></script>
         </head>
-    <body>
+    <body class="bg-gray-50 dark:bg-gray-900">
         <div>
             {{if .page}}
         <script>
@@ -90,7 +90,7 @@
             </ul>
         </div> -->
 
-        <section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
+        <section class="bg-gray-50 dark:bg-gray-900 py-8 antialiased md:py-16">
 
             <nav class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
                 <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
