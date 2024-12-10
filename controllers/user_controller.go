@@ -15,6 +15,7 @@ type userData struct {
 }
 
 func DashboardPage(c *gin.Context) {
+	books := models.BooksAll(c)
 	session := sessions.Default(c)
 	sessionID := session.Get("userID")
 	// Check if the user exists
@@ -23,7 +24,8 @@ func DashboardPage(c *gin.Context) {
 	c.HTML(http.StatusOK,
 		"admin/dashboard.tpl",
 		gin.H{
-			"user": user,
+			"user":  user,
+			"books": books,
 		})
 }
 
@@ -75,7 +77,7 @@ func Login(c *gin.Context) {
 	session.Save()
 
 	if user.IsAdmin {
-		c.Redirect(http.StatusFound, "/admin")
+		c.Redirect(http.StatusFound, "/admin/dashboard")
 	} else {
 		c.Redirect(http.StatusFound, "/books")
 	}
