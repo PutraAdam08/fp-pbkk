@@ -23,12 +23,9 @@ func MainPage(c *gin.Context) {
 	session := sessions.Default(c)
 
 	// Retrieve user ID from session
-	sessionID := session.Get("user_id")
+	sessionID := session.Get("userID")
 
-	userId := sessionID.(uint)
-	user := models.UserFromId(userId)
-	if user == nil {
-		// User is not in session
+	if sessionID == nil {
 		c.HTML(
 			http.StatusOK,
 			"books/main.tpl",
@@ -36,13 +33,35 @@ func MainPage(c *gin.Context) {
 		)
 		return
 	} else {
+		userId := sessionID.(uint)
+		println(userId)
+		user := models.UserFromId(userId)
 		if user.IsAdmin {
 			c.Redirect(http.StatusFound, "/admin/dashboard")
 		} else {
 			c.Redirect(http.StatusFound, "/books")
 		}
-
 	}
+
+	// userId := sessionID.(uint)
+	// println(userId)
+	// user := models.UserFromId(userId)
+	// if user == nil {
+	// 	// User is not in session
+	// 	c.HTML(
+	// 		http.StatusOK,
+	// 		"books/main.tpl",
+	// 		gin.H{},
+	// 	)
+	// 	return
+	// } else {
+	// 	if user.IsAdmin {
+	// 		c.Redirect(http.StatusFound, "/admin/dashboard")
+	// 	} else {
+	// 		c.Redirect(http.StatusFound, "/books")
+	// 	}
+
+	// }
 }
 
 func BookIndex(c *gin.Context) {
